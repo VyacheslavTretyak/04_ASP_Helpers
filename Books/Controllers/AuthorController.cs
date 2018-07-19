@@ -15,6 +15,7 @@ namespace Books.Controllers
         {
 			return View(authors.GetAll());
 		}
+
 		public ActionResult Delete(int? id)
 		{
 			if (id != null)
