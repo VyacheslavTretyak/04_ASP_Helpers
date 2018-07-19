@@ -1,0 +1,85 @@
+﻿@using System.Reflection;
+@using Books.Controllers;
+@using BooksLib;
+
+@{
+	@model IEnumerable<Book>
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Books List</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous" />
+
+	<link href="~/Styles/style.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1>Books List</h1>
+				@using (Html.BeginForm("List", "Book", FormMethod.Post))
+				{
+					<div>
+						<table>
+							<tr>
+								@foreach (PropertyInfo propInfo in typeof(Book).GetProperties())
+								{
+									<th>@propInfo.Name</th>
+								}
+
+							</tr>
+							@if (Model?.Any() == true)
+							{
+								foreach (Book book in Model)
+								{
+									<tr>
+										<td>
+											@Html.DisplayFor(i => book.ID)
+										</td>
+										<td>
+											@Html.DisplayFor(i => book.Name)
+										</td>
+										<td>
+											@Html.DisplayFor(i => book.Author)
+										</td>
+										<td>
+											@Html.DisplayFor(i => book.Publisher.Name)
+										</td>
+										<td>
+											@Html.DisplayFor(i => book.PublishDate)
+										</td>
+										<td>
+											@Html.DisplayFor(i => book.PageCount)
+										</td>
+										<td>
+											@Html.DisplayFor(i => book.ISBN)
+										</td>
+										<td>
+											@Html.ActionLink("Edit", "Edit", new { id = book.ID })
+										</td>
+										<td>
+											@Html.ActionLink("Delete", "Delete", new { id = book.ID })
+										</td>
+									</tr>
+								}
+							}
+						</table>
+						<div class="action">
+							@Html.ActionLink("Create Book", "Create")
+						</div>
+						<div class="action">
+							@Html.ActionLink("Autors", "List", "Author")
+						</div>
+						<div class="action">
+							@Html.ActionLink("Publishers", "List", "Publisher")
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</body>
+</html>
